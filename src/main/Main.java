@@ -9,7 +9,7 @@ public class Main {
 		RandomObjectFiller objectFiller = new RandomObjectFiller();
 		Bean1 bean1 = objectFiller.createAndFill(Bean1.class, 3);
 		System.out.println(bean1.toString());
-
+ 
 	}
 
 }
