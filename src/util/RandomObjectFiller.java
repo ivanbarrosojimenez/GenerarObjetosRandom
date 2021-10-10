@@ -45,6 +45,7 @@ public class RandomObjectFiller {
      */
     private Object getRandomValueForField(Field field, int sizeOfList) throws Exception {
         Class<?> type = field.getType();
+        System.out.println(type.getName());
 
         if(type.isEnum()) {
             Object[] enumValues = type.getEnumConstants();
@@ -61,7 +62,10 @@ public class RandomObjectFiller {
             return field.getName();
         } else if(type.equals(BigInteger.class)){
             return BigInteger.valueOf(random.nextInt());
-        } else if(type.equals(List.class)){
+        } else if(type.equals(Boolean.class) || type.getName().equals("boolean")){
+            return random.nextBoolean();
+        }
+        else if(type.equals(List.class)){
         	ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
             Class<?> stringListClass = (Class<?>) stringListType.getActualTypeArguments()[0];         
             return getListGeneric(stringListClass, sizeOfList);

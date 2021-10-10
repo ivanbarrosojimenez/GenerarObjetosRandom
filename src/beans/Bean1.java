@@ -11,6 +11,15 @@ public class Bean1 {
 	private List<String> listString;
 	private Bean2 bean2;
 	private List<Bean2> listBean2;
+	private boolean active;
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public List<Bean2> getListBean2() {
 		return listBean2;
 	}
@@ -80,7 +89,7 @@ public class Bean1 {
 	public String toString() {
 		return "Bean1 [string1=" + string1 + ", string2=" + string2 + ", int1=" + int1 + ", double1=" + double1
 				+ ", double2=" + double2 + ", listString=" + listString + ", bean2=" + bean2 + ", listBean2="
-				+ listBean2 + "]";
+				+ listBean2 + ", active=" + active + "]";
 	}
 
 
