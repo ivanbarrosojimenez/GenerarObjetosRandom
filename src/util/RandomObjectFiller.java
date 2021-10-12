@@ -66,22 +66,33 @@ public class RandomObjectFiller {
 		if (result != null) {
 			return result;
 		}
-		// Collections
-		if (type.equals(List.class)) {
-			ParameterizedType listType = (ParameterizedType) field.getGenericType();
-			Class<?> listType0 = (Class<?>) listType.getActualTypeArguments()[0];
-			return getListGeneric(listType0, sizeOfList);
-		} else if (type.equals(Set.class)) {
-			ParameterizedType listType = (ParameterizedType) field.getGenericType();
-			Class<?> listType0 = (Class<?>) listType.getActualTypeArguments()[0];
-			return getSetGeneric(listType0, sizeOfList);
-		} else if (type.equals(Map.class)) {
-			ParameterizedType mapType = (ParameterizedType) field.getGenericType();
-			Class<?> mapType0 = (Class<?>) mapType.getActualTypeArguments()[0];
-			Class<?> mapType1 = (Class<?>) mapType.getActualTypeArguments()[1];
-			return getMapGeneric(mapType0, mapType1);
+
+		Object resultCollection = getCollectionType(type, field);
+		if (resultCollection != null) {
+			return resultCollection;
 		}
 		return createAndFill(type, sizeOfList, isValueRandom);
+	}
+
+	private Object getCollectionType(Class<?> type, Field field) throws Exception {
+		ParameterizedType collectionType = null;
+		if (type.equals(List.class) || type.equals(Set.class) || type.equals(Map.class))
+		{
+			collectionType = (ParameterizedType) field.getGenericType();
+		}
+
+		if (type.equals(List.class)) {
+			Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+			return getListGeneric(listType0, sizeOfList);
+		} else if (type.equals(Set.class)) {
+			Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+			return getSetGeneric(listType0, sizeOfList);
+		} else if (type.equals(Map.class)) {
+			Class<?> mapType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+			Class<?> mapType1 = (Class<?>) collectionType.getActualTypeArguments()[1];
+			return getMapGeneric(mapType0, mapType1);
+		}
+		return null;
 	}
 
 	private Object getGenericType(Class<?> type, String name) {
