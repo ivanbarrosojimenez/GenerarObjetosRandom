@@ -2,6 +2,7 @@ package beans;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Bean3 {
 	private String string3 = "";
@@ -13,9 +14,19 @@ public class Bean3 {
 	private List<Bean1> listBean1;
 	private Map<Integer, String> map;
 	private Map<Integer, Bean1> map2;
+	private Set<Bean1> map3;
+	
+	
+	
 
-	
-	
+	public Set<Bean1> getMap3() {
+		return map3;
+	}
+
+	public void setMap3(Set<Bean1> map3) {
+		this.map3 = map3;
+	}
+
 	public Map<Integer, Bean1> getMap2() {
 		return map2;
 	}
@@ -95,7 +106,7 @@ public class Bean3 {
 	public String toString() {
 		return "Bean3 [string3=" + string3 + ", string4=" + string4 + ", int5=" + int5 + ", double6=" + double6
 				+ ", double7=" + double7 + ", listInteger=" + listInteger + ", listBean1=" + listBean1 + ", map=" + map
-				+ ", map2=" + map2 + "]";
+				+ ", map2=" + map2 + ", map3=" + map3 + "]";
 	}
 
 }

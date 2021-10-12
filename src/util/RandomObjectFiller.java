@@ -8,9 +8,11 @@ import java.lang.reflect.ParameterizedType;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -103,11 +105,15 @@ public class RandomObjectFiller {
 		} else if (type.equals(Boolean.class) || type.equals(Boolean.TYPE)) {
 			return getBooleanValue();
 		}
-
+		// Collections
 		else if (type.equals(List.class)) {
 			ParameterizedType listType = (ParameterizedType) field.getGenericType();
 			Class<?> listType0 = (Class<?>) listType.getActualTypeArguments()[0];
 			return getListGeneric(listType0, sizeOfList);
+		} else if (type.equals(Set.class)) {
+			ParameterizedType listType = (ParameterizedType) field.getGenericType();
+			Class<?> listType0 = (Class<?>) listType.getActualTypeArguments()[0];
+			return getSetGeneric(listType0, sizeOfList);
 		} else if (type.equals(Map.class)) {
 			ParameterizedType mapType = (ParameterizedType) field.getGenericType();
 			Class<?> mapType0 = (Class<?>) mapType.getActualTypeArguments()[0];
@@ -164,6 +170,8 @@ public class RandomObjectFiller {
 
 	/**
 	 * Gets the list generic.
+	 * 
+	 * @param <T>
 	 *
 	 * @param <T>        the generic type
 	 * @param type       the type
@@ -171,8 +179,16 @@ public class RandomObjectFiller {
 	 * @return the list generic
 	 * @throws Exception the exception
 	 */
-	private <T> Object getListGeneric(Class<?> type, int sizeOfList) throws Exception {
+	private <T> List<T> getListGeneric(Class<?> type, int sizeOfList) throws Exception {
 		List<T> result = new ArrayList<>();
+		for (int i = 0; i < sizeOfList; i++) {
+			result.add((T) getRandomValueForType(type));
+		}
+		return result;
+	}
+
+	private <T> Set<T> getSetGeneric(Class<?> type, int sizeOfList) throws Exception {
+		Set<T> result = new HashSet<>();
 		for (int i = 0; i < sizeOfList; i++) {
 			result.add((T) getRandomValueForType(type));
 		}
