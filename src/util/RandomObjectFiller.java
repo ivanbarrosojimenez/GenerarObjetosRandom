@@ -79,19 +79,20 @@ public class RandomObjectFiller {
 		if (type.equals(List.class) || type.equals(Set.class) || type.equals(Map.class))
 		{
 			collectionType = (ParameterizedType) field.getGenericType();
+			if (type.equals(List.class)) {
+				Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+				return getListGeneric(listType0, sizeOfList);
+			} else if (type.equals(Set.class)) {
+				Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+				return getSetGeneric(listType0, sizeOfList);
+			} else if (type.equals(Map.class)) {
+				Class<?> mapType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
+				Class<?> mapType1 = (Class<?>) collectionType.getActualTypeArguments()[1];
+				return getMapGeneric(mapType0, mapType1);
+			}
 		}
 
-		if (type.equals(List.class)) {
-			Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
-			return getListGeneric(listType0, sizeOfList);
-		} else if (type.equals(Set.class)) {
-			Class<?> listType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
-			return getSetGeneric(listType0, sizeOfList);
-		} else if (type.equals(Map.class)) {
-			Class<?> mapType0 = (Class<?>) collectionType.getActualTypeArguments()[0];
-			Class<?> mapType1 = (Class<?>) collectionType.getActualTypeArguments()[1];
-			return getMapGeneric(mapType0, mapType1);
-		}
+
 		return null;
 	}
 
