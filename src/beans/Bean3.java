@@ -10,6 +10,17 @@ public class Bean3 {
 	private Double double6 = new Double(0);
 	private Double double7 =null;
 	private List<Integer> listInteger;
+	private List<Bean1> listBean1;
+
+	public List<Bean1> getListBean1() {
+		return listBean1;
+	}
+
+	public void setListBean1(List<Bean1> listBean1) {
+		this.listBean1 = listBean1;
+	}
+
+
 	private Map<Integer, String> map;
 	
 	public Map<Integer, String> getMap() {
@@ -86,8 +97,9 @@ public class Bean3 {
 
 	@Override
 	public String toString() {
-		return "Bean2 [string3=" + string3 + ", string4=" + string4 + ", int5=" + int5 + ", double6=" + double6
-				+ ", double7=" + double7 + ", listInteger=" + listInteger + "]";
+		return "Bean3 [string3=" + string3 + ", string4=" + string4 + ", int5=" + int5 + ", double6=" + double6
+				+ ", double7=" + double7 + ", listInteger=" + listInteger + ", listBean1=" + listBean1 + ", map=" + map
+				+ "]";
 	}
 
 
