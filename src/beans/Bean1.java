@@ -6,7 +6,7 @@ public class Bean1 {
 	private String string1 = "";
 	private String string2 = null;
 	private int int1 = 0;
-	private Double double1 = new Double(0);
+	private Double double1 = Double.valueOf(0);
 	private Double double2 =null;
 	private List<String> listString;
 	private Bean2 bean2;

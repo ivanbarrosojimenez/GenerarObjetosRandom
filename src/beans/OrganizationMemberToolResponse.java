@@ -9,11 +9,6 @@ package beans;
  */
 public class OrganizationMemberToolResponse {
 	
-	/**
-	 * Instantiates a new organization member tool response.
-	 */
-	public OrganizationMemberToolResponse() {
-	}
 
 	@Override
 	public String toString() {

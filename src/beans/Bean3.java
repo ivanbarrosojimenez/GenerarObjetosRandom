@@ -8,7 +8,7 @@ public class Bean3 {
 	private String string3 = "";
 	private String string4 = null;
 	private int int5 = 0;
-	private Double double6 = new Double(0);
+	private Double double6 = Double.valueOf(0);
 	private Double double7 = null;
 	private List<Integer> listInteger;
 	private List<Bean1> listBean1;
@@ -57,9 +57,6 @@ public class Bean3 {
 
 	public void setListInteger(List<Integer> listInteger) {
 		this.listInteger = listInteger;
-	}
-
-	public Bean3() {
 	}
 
 	public String getString3() {

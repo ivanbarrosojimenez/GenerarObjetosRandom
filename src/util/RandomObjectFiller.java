@@ -29,11 +29,6 @@ public class RandomObjectFiller {
 	/** The size of list. */
 	private int sizeOfList = 0;
 
-	/** The entry. */
-	private static int entry = 0;
-
-	private static boolean isDebug = true;
-
 	/**
 	 * Creates the and fill.
 	 *
@@ -45,38 +40,18 @@ public class RandomObjectFiller {
 	 * @throws Exception the exception
 	 */
 	public <T> T createAndFill(Class<T> clazz, int sizeOfList, boolean isValueRandom) throws Exception {
-		entry += 2;
 		this.isValueRandom = isValueRandom;
 		this.sizeOfList = sizeOfList;
-		T instance = clazz.newInstance();
-		printLog(entry - 2, "* " + clazz.getCanonicalName());
+		T instance = clazz.getDeclaredConstructor().newInstance();
 		for (Field field : clazz.getDeclaredFields()) {
-			printLog(entry, field.getName());
 			field.setAccessible(true);
 			Object value = getRandomValueForField(field);
 			field.set(instance, value);
 			field.setAccessible(false);
 		}
-		entry -= 2;
 		return instance;
 	}
 
-	/**
-	 * Prints the log.
-	 *
-	 * @param tab  the tab
-	 * @param text the text
-	 */
-	void printLog(int tab, String text) {
-		if (isDebug) {
-			StringBuilder space = new StringBuilder();
-			for (int i = 0; i < tab; i++) {
-				space.append("  ");
-			}
-			System.out.println(space.toString() + text);
-		}
-
-	}
 
 	/**
 	 * Gets the random value for field.
@@ -87,26 +62,12 @@ public class RandomObjectFiller {
 	 */
 	private Object getRandomValueForField(Field field) throws Exception {
 		Class<?> type = field.getType();
-
-		if (type.isEnum()) {
-			return getEnumValue(type);
-		} else if (type.equals(Integer.TYPE) || type.equals(Integer.class)) {
-			return getIntegerValue();
-		} else if (type.equals(Long.TYPE) || type.equals(Long.class)) {
-			return getLongValue();
-		} else if (type.equals(Double.TYPE) || type.equals(Double.class)) {
-			return getDoubleValue();
-		} else if (type.equals(Float.TYPE) || type.equals(Float.class)) {
-			return getFloatValue();
-		} else if (type.equals(String.class)) {
-			return getStringValue(field.getName());
-		} else if (type.equals(BigInteger.class)) {
-			return getBigIntegerValue();
-		} else if (type.equals(Boolean.class) || type.equals(Boolean.TYPE)) {
-			return getBooleanValue();
+		Object result = getGenericType(type, field.getName());
+		if (result != null) {
+			return result;
 		}
 		// Collections
-		else if (type.equals(List.class)) {
+		if (type.equals(List.class)) {
 			ParameterizedType listType = (ParameterizedType) field.getGenericType();
 			Class<?> listType0 = (Class<?>) listType.getActualTypeArguments()[0];
 			return getListGeneric(listType0, sizeOfList);
@@ -122,6 +83,28 @@ public class RandomObjectFiller {
 		}
 		return createAndFill(type, sizeOfList, isValueRandom);
 	}
+
+	private Object getGenericType(Class<?> type, String name) {
+		if (type.isEnum()) {
+			return getEnumValue(type);
+		} else if (type.equals(Integer.TYPE) || type.equals(Integer.class)) {
+			return getIntegerValue();
+		} else if (type.equals(Long.TYPE) || type.equals(Long.class)) {
+			return getLongValue();
+		} else if (type.equals(Double.TYPE) || type.equals(Double.class)) {
+			return getDoubleValue();
+		} else if (type.equals(Float.TYPE) || type.equals(Float.class)) {
+			return getFloatValue();
+		} else if (type.equals(String.class)) {
+			return getStringValue(name);
+		} else if (type.equals(BigInteger.class)) {
+			return getBigIntegerValue();
+		} else if (type.equals(Boolean.class) || type.equals(Boolean.TYPE)) {
+			return getBooleanValue();
+		}
+		return null;
+	}
+
 
 	/**
 	 * Gets the map generic.
@@ -179,18 +162,18 @@ public class RandomObjectFiller {
 	 * @return the list generic
 	 * @throws Exception the exception
 	 */
-	private <T> List<T> getListGeneric(Class<?> type, int sizeOfList) throws Exception {
-		List<T> result = new ArrayList<>();
+	private List<Object> getListGeneric(Class<?> type, int sizeOfList) {
+		List<Object> result = new ArrayList<>();
 		for (int i = 0; i < sizeOfList; i++) {
-			result.add((T) getRandomValueForType(type));
+			result.add(getGenericType(type, ""));
 		}
 		return result;
 	}
 
-	private <T> Set<T> getSetGeneric(Class<?> type, int sizeOfList) throws Exception {
-		Set<T> result = new HashSet<>();
+	private Set<Object> getSetGeneric(Class<?> type, int sizeOfList) throws Exception {
+		Set<Object> result = new HashSet<>();
 		for (int i = 0; i < sizeOfList; i++) {
-			result.add((T) getRandomValueForType(type));
+			result.add(getRandomValueForType(type));
 		}
 		return result;
 	}

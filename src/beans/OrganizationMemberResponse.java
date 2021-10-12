@@ -16,11 +16,6 @@ public class OrganizationMemberResponse {
 				+ internalId + ", roleName=" + roleName + "]";
 	}
 
-	/**
-	 * Instantiates a new organization member response.
-	 */
-	public OrganizationMemberResponse() {
-	}
 
 	/**
 	 * Gets the organization member status.

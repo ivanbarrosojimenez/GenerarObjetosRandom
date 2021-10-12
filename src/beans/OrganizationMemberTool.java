@@ -12,8 +12,6 @@ public class OrganizationMemberTool {
 	/**
 	 * Instantiates a new organization member tool.
 	 */
-	public OrganizationMemberTool() {
-	}
 
 	@Override
 	public String toString() {
